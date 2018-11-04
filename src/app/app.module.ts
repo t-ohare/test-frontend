@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent} from './nav/nav.component';
 import { ReadComponent} from './read/read.component';
+import { HttpClientModule } from '@angular/common/http';
+import { WebService } from './http/web-service';
 
 @NgModule({
   declarations: [
@@ -15,8 +17,11 @@ import { ReadComponent} from './read/read.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    WebService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

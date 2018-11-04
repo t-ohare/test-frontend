@@ -1,12 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Reading } from './reading';
+import { WebService } from '../http/web-service';
 
 @Injectable({
   providedIn: 'root',
 })
 
+
+ 
+
 export class ReadingsService {
     reads = [];
+
+    constructor(public webService: WebService) {
+        const ctx = this;
+
+        this.webService.getRemoteData().subscribe(data => {
+            const reads = Object.keys(data).map(function(idx){
+                return data[idx];
+            }).forEach((read) => {
+                let newRead = new Reading(read.read, read.search, this.reads.length + 1);
+                ctx.reads.push(newRead);
+            });
+            console.log(reads, 'reads');
+        });
+    }
 
     addBlankReading() {
         let newReading = new Reading("","", this.reads.length + 1);
