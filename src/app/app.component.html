@@ -11,8 +11,15 @@
 </div>
 
 <div class="row">
-  <div class="col">
-    <button (click)="addReadBlock()" type="button" class="btn btn-primary float-right margin-top-ten">Add</button>
+  <div class="col-sm-12">
+    <button (click)="addReadBlock()" type="button" class="btn btn-primary float-right margin-top-ten action">Add</button>
+    <button (click)="save()" type="button" class="btn btn-primary float-right margin-top-ten action">Save</button>
+  </div>
+  <div id="save-success" class="col alert alert-success hidden">
+    Saved
+  </div>
+  <div id="save-failed" class="col alert alert-danger hidden">
+    Sorry, an error occured
   </div>
 </div>
 

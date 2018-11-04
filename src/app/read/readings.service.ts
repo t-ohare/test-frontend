@@ -6,9 +6,6 @@ import { WebService } from '../http/web-service';
   providedIn: 'root',
 })
 
-
- 
-
 export class ReadingsService {
     reads = [];
 
@@ -22,7 +19,24 @@ export class ReadingsService {
                 let newRead = new Reading(read.read, read.search, this.reads.length + 1);
                 ctx.reads.push(newRead);
             });
-            console.log(reads, 'reads');
+        });
+    }
+
+    save() {
+        const postData = this.reads
+        this.webService.saveChanges(postData).subscribe(data => {
+            const error = data["exception"];
+            let messageContainer = document.getElementById("save-failed");
+
+            if (typeof(error) == "undefined") {
+                messageContainer = document.getElementById("save-success");
+            }
+
+            messageContainer.classList.remove("hidden");
+
+            setTimeout(() => {
+                messageContainer.classList.add("hidden");
+            }, 2000);
         });
     }
 
@@ -32,9 +46,6 @@ export class ReadingsService {
     }
 
     getReadings() {
-        var dummyReading = new Reading("CADT", "CA", this.reads.length + 1);
-        this.reads.push(dummyReading);
-
         return this.reads
     }
 

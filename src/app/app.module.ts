@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent} from './nav/nav.component';
@@ -12,12 +13,12 @@ import { WebService } from './http/web-service';
   declarations: [
     AppComponent,
     NavComponent,
-    ReadComponent
+    ReadComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     WebService

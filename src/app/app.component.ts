@@ -31,4 +31,9 @@ export class AppComponent implements OnInit {
   totalFound() {
     return this.readings.totalFound();
   }
+
+  save() {
+    this.readings.save();
+    return false;
+  }
 }
