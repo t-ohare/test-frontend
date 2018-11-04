@@ -1,9 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <app-nav></app-nav>
 
+<div class="container">
 <div class="row">
   <div class="col-sm-12">
-    <div *ngFor="let reading of reads">{{read}}
+    <div *ngFor="let reading of allReadings">
       <reading [reading]="reading"></reading>
     </div>
   </div>
@@ -13,4 +14,17 @@
   <div class="col">
     <button (click)="addReadBlock()" type="button" class="btn btn-primary float-right margin-top-ten">Add</button>
   </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Summary</h3>
+    <div *ngFor="let reading of allReadings">
+      <p><strong>Reading {{reading.index}}: </strong>{{reading.instancesOfSearchString.length}} match(es) found</p>
+    </div>
+    <h3>Total</h3>
+    <p>{{totalRead()}} read</p>
+    <p>{{totalFound()}} found</p>
+  </div>
+</div>
 </div>

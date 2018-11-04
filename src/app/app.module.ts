@@ -6,12 +6,11 @@ import { AppComponent } from './app.component';
 import { NavComponent} from './nav/nav.component';
 import { ReadComponent} from './read/read.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    ReadComponent,
+    ReadComponent
   ],
   imports: [
     BrowserModule,

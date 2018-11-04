@@ -1,27 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { ReadComponent } from './read/read.component';
-import { Reading } from './read/reading';
+import {ReadingsService} from './read/readings.service'
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit {
-  ngOnInit(): void {
-    var dummyReading = new Reading("Jemime");
-    this.reads.push(dummyReading);
+  readings: ReadingsService;
+  allReadings = [];
+ 
+  constructor(readings: ReadingsService) {
+    this.readings = readings;
   }
-  reads = [];
+
+  ngOnInit(): void {
+    this.allReadings = this.readings.getReadings();
+  }
 
   addReadBlock(value){
-    var dummyReading = new Reading("Emma");
-    this.reads.push(dummyReading)
+    this.readings.addBlankReading();
   }
 
-//  
+  totalRead() {
+    return this.readings.totalRead();
+  }
 
-  
-
-  title = 'frontend';
+  totalFound() {
+    return this.readings.totalFound();
+  }
 }
