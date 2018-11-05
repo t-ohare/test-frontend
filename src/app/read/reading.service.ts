@@ -7,7 +7,7 @@ import { WebService } from '../http/web-service';
 })
 
 export class ReadingService {
-    reads = [];
+    reads:Reading[] = [];
 
     //Test:Visual
     constructor(public webService: WebService) {
@@ -17,13 +17,12 @@ export class ReadingService {
             const reads = Object.keys(data).map(function(idx){
                 return data[idx];
             }).forEach((read) => {
-                let newRead = new Reading(read.read, read.search, this.reads.length + 1);
-                ctx.reads.push(newRead);
+                let reading = new Reading(read.read, read.search, this.reads.length + 1);
+                ctx.addReading(reading);
             });
         });
     }
 
-    //Test:Visual
     buildPostData() {
         return this.reads.map((item) => {
             return {"read":item.readingVal, "search":item.readingVal};
@@ -48,23 +47,28 @@ export class ReadingService {
         });
     }
 
-    //Test:Visual
+    //Test:Spec
     addBlankReading() {
         let newReading = new Reading("","", this.reads.length + 1);
         this.reads.push(newReading);
     }
 
-    //Test:Visual
+    //Test:Spec
+    addReading(reading:Reading) {
+        this.reads.push(reading);
+    }
+
+    //Test:Spec
     getReadings() {
         return this.reads
     }
 
-    //Test:Visual
+    //Test:Spec
     totalRead() {
         return this.reads.length;
     }
 
-    //Test:Visual
+    //Test:Spec
     totalFound() {
         let totalAmount = 0;
         this.reads.forEach( reading => totalAmount = totalAmount + reading.matches());
