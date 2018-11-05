@@ -13,7 +13,7 @@ import { ReadingService } from './reading.service'
  */
 export class ReadComponent implements OnInit {
   ngOnInit(): void { 
-    //this.reading.refreshUI();
+    this.reading.refreshUI();
   }
 
   // Reading is the actual domain logic

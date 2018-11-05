@@ -9,6 +9,7 @@ import { WebService } from '../http/web-service';
 export class ReadingService {
     reads = [];
 
+    //Test:Visual
     constructor(public webService: WebService) {
         const ctx = this;
 
@@ -22,12 +23,14 @@ export class ReadingService {
         });
     }
 
+    //Test:Visual
     buildPostData() {
         return this.reads.map((item) => {
             return {"read":item.readingVal, "search":item.readingVal};
         });
     }
 
+    //Test:Other side of boundary
     save() {
         this.webService.saveChanges(this.buildPostData()).subscribe(data => {
             const error = data["exception"];
@@ -45,19 +48,23 @@ export class ReadingService {
         });
     }
 
+    //Test:Visual
     addBlankReading() {
         let newReading = new Reading("","", this.reads.length + 1);
         this.reads.push(newReading);
     }
 
+    //Test:Visual
     getReadings() {
         return this.reads
     }
 
+    //Test:Visual
     totalRead() {
         return this.reads.length;
     }
 
+    //Test:Visual
     totalFound() {
         let totalAmount = 0;
         this.reads.forEach( reading => totalAmount = totalAmount + reading.matches());
@@ -65,6 +72,7 @@ export class ReadingService {
         return totalAmount;
     }
 
+    //Test:Visual
     reindex() {
         this.reads.map((item, index) => {
             item.index = index + 1;
