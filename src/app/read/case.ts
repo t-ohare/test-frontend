@@ -1,8 +1,8 @@
 import { Input, NgModule, Component, Pipe, Directive, OnInit } from "@angular/core";
 
 
-export class Reading {
-    public reading:string = '';
+export class Case {
+    reading:string = '';
     search:string = '';
     index:number = 0;
     instancesOfSearchString = [];
@@ -13,6 +13,7 @@ export class Reading {
         this.reading = reading;
         this.search = search;
         this.indicesOfSearch();
+        this.refreshUI();
     }
 
     // Loops through the reading getting the next index of the search each time,
@@ -39,6 +40,21 @@ export class Reading {
     refreshUI(){
         this.hideBackButtonIfNecessary();
         this.hideForwardButtonIfNecessary();
+        this.hideNowShowingIfNecessary();
+    }
+
+    hideNowShowingIfNecessary() {
+        let element = document.getElementById("positions-" + this.index);
+
+        if (element == null) {
+            return;
+        }
+
+        if (0 == this.matches()) {
+            element.classList.add("hidden");
+        } else {
+            element.classList.remove("hidden");
+        }
     }
 
     indexOfElement() {
@@ -87,5 +103,17 @@ export class Reading {
 
     matches() {
         return this.instancesOfSearchString.length;
+    }
+
+    showPositionBlock() {
+        return this.matches() > 0;
+    }
+
+    forwardShouldBeDisabled() {
+        return this.showingMatch >= this.matches();
+    }
+
+    backShouldBeDisabled() {
+        return this.showingMatch >= 1;
     }
 }

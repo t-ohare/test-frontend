@@ -1,30 +1,46 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import {ReadComponent} from './read.component';
-import {Reading} from './reading';
+import { ReadComponent } from './read.component';
+import { CasesService } from './cases.service'
+import { WebService } from '../http/web-service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 describe('ReadComponent', () => {
-    it("should be hooked into the test environment", () => {
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+          imports: [
+            RouterTestingModule,
+            HttpClientModule,
+          ],
+          declarations: [
+          ],
+          providers: [
+              CasesService,
+              WebService
+            ],
+        }).compileComponents();
+      }));
+
+    it("Is hooked into the test environment", () => {
         expect (1).toEqual(1);
     });
 
-    it('should create an instance', () => {
-        expect(new ReadComponent()).toBeTruthy();
+    it('can be created', () => {
+        const mockReadingsService = TestBed.get(CasesService);
+        expect(new ReadComponent(mockReadingsService)).toBeTruthy();
     });
 
-    it ('can generate a random string consisting of only valid character', () => {
-        const c = new ReadComponent();
+    it ('can generate a 150 character reading consisting only of the characters C,A,G & T', () => {
+        const mockReadingsService = TestBed.get(CasesService);
+        const c = new ReadComponent(mockReadingsService);
         const randomStr = c.generateRandomReading();
         const randomStrLength = randomStr.length;
-        const indexOfInvalidCharacter = randomStr.indexOf("U");
-        const indexOfValidCharacter = randomStr.indexOf("A");
+        const stringContainsNoInvalidCharacters:boolean = randomStr.indexOf("U") == -1;
+        const stringContainsValidCharacter:boolean =  randomStr.indexOf("A") >= 0;
 
         expect(randomStrLength).toEqual(150);
-        expect(indexOfInvalidCharacter).toEqual(-1);
-        expect(indexOfValidCharacter).toBeTruthy();
+        expect(stringContainsNoInvalidCharacters).toBeTruthy();
+        expect(stringContainsValidCharacter).toBeTruthy();
     });
-
-    it('can show the intstances of a reading search in the reading', () => {
-        const c = new ReadComponent();
-    })
 });

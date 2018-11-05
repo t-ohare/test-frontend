@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Reading } from './reading';
-import {ReadingsService} from './readings.service'
+import { Case } from './case';
+import { CasesService } from './cases.service'
 
 @Component({
   selector: 'reading',
@@ -8,27 +8,34 @@ import {ReadingsService} from './readings.service'
   styleUrls: ['./read.component.css']
 })
 
+/**
+ * UI Component, (almost) no actual domain logic
+ */
 export class ReadComponent implements OnInit {
-  ngOnInit(): void {
-    this.reading.refreshUI();
+  ngOnInit(): void { 
+    this.case.refreshUI();
   }
+  
+  // Reading is the actual domain logic
+  @Input() case: Case;
 
-  @Input() public reading: Reading;
+  readingsService: CasesService;
+//  showingMatch:number = 1;
 
-  readings: ReadingsService;
-
-  showingMatch:number = 1;
-
-  constructor(readings: ReadingsService) {
-    this.readings = readings;
+  // region Constructors
+  constructor(readingsService: CasesService) {
+    this.readingsService = readingsService;
   }
+  // endregion
 
+  // Test: Spec
   generateReading() {
-    this.reading.reading = this.generateRandomReading();
-    this.findInstancesOfRead();
+    this.case.reading = this.generateRandomReading();
+    this.search();
     return false;
   }
 
+  // Test: Spec
   generateRandomReading() {
     let str = "";
     const options = "CAGT";
@@ -43,36 +50,43 @@ export class ReadComponent implements OnInit {
     return str;
   }
 
+  // Test: Visual
   updateReading(event) {
-    this.reading.reading = event.target.value;
-    this.findInstancesOfRead();
+    this.case.reading = event.target.value;
+    this.search();
   }
 
+  // Test: Visual
   updateSearch(event) {
-    this.reading.search = event.target.value;
+    this.case.search = event.target.value;
 
-    this.findInstancesOfRead();
+    this.search();
   }
 
-  findInstancesOfRead() {
-    this.reading.indicesOfSearch();
-    this.reading.refreshUI();
+  //Test: Delegated
+  search() {
+    this.case.indicesOfSearch();
+    this.case.refreshUI();
   }
 
+  //Test: Delegated
   removeReading(index) {
-    this.readings.reads.splice(index, 1);
-    this.readings.reindex();    
+    this.readingsService.reads.splice(index, 1);
+    this.readingsService.reindex();    
+    this.readingsService.save();
     return false;
   }
 
+  //Test: Delegated
   goNext(event):boolean {
-    this.reading.goNext();
+    this.case.goNext();
 
     return false;
   }
 
+  //Test:Delegated
   goBack(event):boolean {
-    this.reading.goBack();
+    this.case.goBack();
 
     return false;
   }

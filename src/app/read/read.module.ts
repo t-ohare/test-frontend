@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { ReadComponent } from './read.component';
-import { Reading } from './reading';
+import { Case } from './case';
 
 @NgModule({
   declarations: [
@@ -12,10 +12,11 @@ import { Reading } from './reading';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    Reading
+    Case
   ],
   providers: [],
   bootstrap: [ReadComponent]
 })
+
 export class ReadModule {
 }

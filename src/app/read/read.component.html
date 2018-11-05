@@ -15,7 +15,7 @@
 
                     <div class="row">
                         <div class="col-sm-10">
-                                <input (keyup)="updateReading($event)" value="{{reading.reading}}" type="text" class="form-control" id="reading{{reading.index}}" placeholder="Reading">
+                                <input pattern="^[ACGT]{0,160}$" maxlength="150" (keyup)="updateReading($event)" value="{{reading.reading}}" type="text" class="form-control" id="reading{{reading.index}}" placeholder="Reading">
                         </div>
                         <div class="col-sm-2">
                             <button class="btn btn-secondary float-right" (click)="generateReading()">Generate</button>
@@ -31,16 +31,15 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                                <input (keyup)="updateSearch($event)" value="{{reading.search}}" type="text" class="form-control" id="search{{reading.index}}" placeholder="Search">
+                                <input pattern="^[ACGT]{0,10}$" maxlength="10" (keyup)="updateSearch($event)" value="{{reading.search}}" type="text" class="form-control" id="search{{reading.index}}" placeholder="Search">
                         </div>
                         <div class="col-sm-4">
                             <h4>Found : {{reading.instancesOfSearchString.length}}</h4>
-                            <h4>#{{reading.showingMatch}} at position:{{reading.indexOfElement()}}</h4>
+                            <h4 *ngIf="reading.showPositionBlock()" id="positions-{{reading.index}}" class="">#{{reading.showingMatch}} at position:{{reading.indexOfElement()}}</h4>
                         </div>
                         <div class="col-sm-4">
-                                <button (click)="goBack($event)" id="back-btn-{{reading.index}}" class="btn btn-secondary back-button"><</button>
-                                <button (click)="goNext($event)" id="forward-button-{{reading.index}}" class="btn btn-secondary">></button>
-
+                                <button [disabled]="reading.backShouldBeDisabled()" (click)="goBack($event)" id="back-btn-{{reading.index}}" class="btn btn-secondary back-button"><</button>
+                                <button [disabled]="reading.forwardShouldBeDisabled()" (click)="goNext($event)" id="forward-button-{{reading.index}}" class="btn btn-secondary">></button>
                         </div>
                     </div>
                 </div>

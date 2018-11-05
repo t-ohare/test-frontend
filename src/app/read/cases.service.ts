@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Reading } from './reading';
+import { Case } from './case';
 import { WebService } from '../http/web-service';
 
 @Injectable({
   providedIn: 'root',
 })
 
-export class ReadingsService {
+export class CasesService {
     reads = [];
 
     constructor(public webService: WebService) {
@@ -16,7 +16,7 @@ export class ReadingsService {
             const reads = Object.keys(data).map(function(idx){
                 return data[idx];
             }).forEach((read) => {
-                let newRead = new Reading(read.read, read.search, this.reads.length + 1);
+                let newRead = new Case(read.read, read.search, this.reads.length + 1);
                 ctx.reads.push(newRead);
             });
         });
@@ -41,7 +41,7 @@ export class ReadingsService {
     }
 
     addBlankReading() {
-        let newReading = new Reading("","", this.reads.length + 1);
+        let newReading = new Case("","", this.reads.length + 1);
         this.reads.push(newReading);
     }
 
@@ -56,6 +56,7 @@ export class ReadingsService {
     totalFound() {
         let totalAmount = 0;
         this.reads.forEach( reading => totalAmount = totalAmount + reading.matches());
+        
         return totalAmount;
     }
 
