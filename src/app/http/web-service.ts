@@ -10,14 +10,10 @@ export class WebService {
         return this.http.get('http://localhost:3000/read');
     }
 
-    saveChanges(data) {
-        let postData = data.map((item) => {
-            return {"read":item.reading, "search":item.search};
-        });
+    saveChanges(postData) {
+        const postBody = {"reads":postData};
 
-        data = {"reads":postData};
-
-        return this.http.post('http://localhost:3000/read', data);
+        return this.http.post('http://localhost:3000/read', postBody);
     }
  
 }

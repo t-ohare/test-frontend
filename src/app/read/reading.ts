@@ -1,24 +1,25 @@
 import { Input, NgModule, Component, Pipe, Directive, OnInit } from "@angular/core";
 
 
-export class Case {
-    reading:string = '';
-    search:string = '';
+export class Reading {
+    readingVal:string = '';
+    searchVal:string = '';
     index:number = 0;
     instancesOfSearchString = [];
-    showingMatch:number = 1;
+    matchShown:number = 1;
 
     constructor(reading:string, search:string, index:number) {
         this.index = index;
-        this.reading = reading;
-        this.search = search;
-        this.indicesOfSearch();
+        this.readingVal = reading;
+        this.searchVal = search;
+        this.instancesOfSearchString = this.search();
         this.refreshUI();
     }
 
     // Loops through the reading getting the next index of the search each time,
-    indicesOfSearch() {
-        let searchStrLen = this.search.length;
+    // Test:spec
+    search() {
+        let searchStrLen = this.searchVal.length;
 
         if (0 == searchStrLen) {
             return [];
@@ -26,23 +27,26 @@ export class Case {
 
         let startIndex = 0, currentIndex, indices = [];
 
-        const upperCaseReading = this.reading.toUpperCase();
-        const upperCaseSearch = this.search.toUpperCase();
+        const upperCaseReading = this.readingVal.toUpperCase();
+        const upperCaseSearch = this.searchVal.toUpperCase();
 
         while((currentIndex = upperCaseReading.indexOf(upperCaseSearch, startIndex)) > -1) {
             indices.push(currentIndex + 1);
             startIndex = currentIndex + searchStrLen; 
         }
 
-        this.instancesOfSearchString = indices;
+        return indices
     }
 
+    //Test: Visual
     refreshUI(){
+        this.instancesOfSearchString = this.search();
         this.hideBackButtonIfNecessary();
         this.hideForwardButtonIfNecessary();
         this.hideNowShowingIfNecessary();
     }
 
+    // Test: Visual
     hideNowShowingIfNecessary() {
         let element = document.getElementById("positions-" + this.index);
 
@@ -57,21 +61,25 @@ export class Case {
         }
     }
 
+    //Test:Visual
     indexOfElement() {
-        return this.instancesOfSearchString[this.showingMatch - 1];
+        return this.instancesOfSearchString[this.matchShown - 1];
     }
 
     //region Navigation
+    // Test:spec
     goNext() {
-        this.showingMatch++;
+        this.matchShown++;
         this.refreshUI();
     }
 
+    // Test:spec
     goBack() {
-        this.showingMatch--;
+        this.matchShown--;
         this.refreshUI();
     }
 
+    //Test:Visual
     hideBackButtonIfNecessary() {
         let button = document.getElementById("back-btn-" + this.index);
 
@@ -79,13 +87,14 @@ export class Case {
             return;
         }
 
-        if (this.showingMatch <= 1) {
+        if (this.matchShown <= 1) {
             button.setAttribute('disabled', 'disabled');
         } else {
             button.removeAttribute("disabled");
         }
     }
 
+    //Test:Visual
     hideForwardButtonIfNecessary() {
         let button = document.getElementById("forward-button-" + this.index);
 
@@ -93,7 +102,7 @@ export class Case {
             return;
         }
 
-        if (this.showingMatch >= this.instancesOfSearchString.length) {
+        if (this.matchShown >= this.instancesOfSearchString.length) {
             button.setAttribute('disabled', 'disabled');
         } else {
             button.removeAttribute("disabled");
@@ -101,19 +110,22 @@ export class Case {
     }
     //endregion
 
+    // Test:spec
     matches() {
         return this.instancesOfSearchString.length;
     }
 
-    showPositionBlock() {
+    // Test:spec
+    hasResults() {
         return this.matches() > 0;
     }
 
-    forwardShouldBeDisabled() {
-        return this.showingMatch >= this.matches();
+    // Test:spec
+    showingLastResult() {
+        return this.matchShown >= this.matches();
     }
 
-    backShouldBeDisabled() {
-        return this.showingMatch >= 1;
+    showingFirstResult() {
+        return this.matchShown == 1;
     }
 }

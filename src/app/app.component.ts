@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CasesService } from './read/cases.service'
+import { ReadingService } from './read/reading.service'
 
 
 @Component({
@@ -9,10 +9,10 @@ import { CasesService } from './read/cases.service'
 })
 
 export class AppComponent implements OnInit {
-  readings: CasesService;
+  readings: ReadingService;
   allReadings = [];
  
-  constructor(readings: CasesService) {
+  constructor(readings: ReadingService) {
     this.readings = readings;
   }
 

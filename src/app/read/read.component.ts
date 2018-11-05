@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Case } from './case';
-import { CasesService } from './cases.service'
+import { Reading } from './reading';
+import { ReadingService } from './reading.service'
 
 @Component({
   selector: 'reading',
@@ -13,24 +13,23 @@ import { CasesService } from './cases.service'
  */
 export class ReadComponent implements OnInit {
   ngOnInit(): void { 
-    this.case.refreshUI();
+    //this.reading.refreshUI();
   }
-  
-  // Reading is the actual domain logic
-  @Input() case: Case;
 
-  readingsService: CasesService;
-//  showingMatch:number = 1;
+  // Reading is the actual domain logic
+  @Input() reading: Reading;
+
+  readingsService: ReadingService;
 
   // region Constructors
-  constructor(readingsService: CasesService) {
+  constructor(readingsService: ReadingService) {
     this.readingsService = readingsService;
   }
   // endregion
 
   // Test: Spec
   generateReading() {
-    this.case.reading = this.generateRandomReading();
+    this.reading.readingVal = this.generateRandomReading();
     this.search();
     return false;
   }
@@ -52,21 +51,20 @@ export class ReadComponent implements OnInit {
 
   // Test: Visual
   updateReading(event) {
-    this.case.reading = event.target.value;
+    this.reading.readingVal = event.target.value;
     this.search();
   }
 
   // Test: Visual
   updateSearch(event) {
-    this.case.search = event.target.value;
+    this.reading.searchVal = event.target.value;
 
     this.search();
   }
 
   //Test: Delegated
   search() {
-    this.case.indicesOfSearch();
-    this.case.refreshUI();
+    this.reading.refreshUI();
   }
 
   //Test: Delegated
@@ -79,14 +77,14 @@ export class ReadComponent implements OnInit {
 
   //Test: Delegated
   goNext(event):boolean {
-    this.case.goNext();
+    this.reading.goNext();
 
     return false;
   }
 
   //Test:Delegated
   goBack(event):boolean {
-    this.case.goBack();
+    this.reading.goBack();
 
     return false;
   }

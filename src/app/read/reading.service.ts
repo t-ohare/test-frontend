@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Case } from './case';
+import { Reading } from './reading';
 import { WebService } from '../http/web-service';
 
 @Injectable({
   providedIn: 'root',
 })
 
-export class CasesService {
+export class ReadingService {
     reads = [];
 
     constructor(public webService: WebService) {
@@ -16,15 +16,20 @@ export class CasesService {
             const reads = Object.keys(data).map(function(idx){
                 return data[idx];
             }).forEach((read) => {
-                let newRead = new Case(read.read, read.search, this.reads.length + 1);
+                let newRead = new Reading(read.read, read.search, this.reads.length + 1);
                 ctx.reads.push(newRead);
             });
         });
     }
 
+    buildPostData() {
+        return this.reads.map((item) => {
+            return {"read":item.readingVal, "search":item.readingVal};
+        });
+    }
+
     save() {
-        const postData = this.reads
-        this.webService.saveChanges(postData).subscribe(data => {
+        this.webService.saveChanges(this.buildPostData()).subscribe(data => {
             const error = data["exception"];
             let messageContainer = document.getElementById("save-failed");
 
@@ -41,7 +46,7 @@ export class CasesService {
     }
 
     addBlankReading() {
-        let newReading = new Case("","", this.reads.length + 1);
+        let newReading = new Reading("","", this.reads.length + 1);
         this.reads.push(newReading);
     }
 
