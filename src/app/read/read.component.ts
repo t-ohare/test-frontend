@@ -93,8 +93,7 @@ export class ReadComponent implements OnInit {
   //Test: Delegated
   removeReading(index) {
     this.readingsService.reads.splice(index, 1);
-    this.readingsService.reindex();    
-    this.readingsService.save();
+    this.readingsService.reindex();
     return false;
   }
 
