@@ -11,14 +11,12 @@ export class ReadingService {
 
     //Test:Visual
     constructor(public webService: WebService) {
-        const ctx = this;
-
         this.webService.getRemoteData().subscribe(data => {
             const reads = Object.keys(data).map(function(idx){
                 return data[idx];
             }).forEach((read) => {
                 let reading = new Reading(read.read, read.search, this.reads.length + 1);
-                ctx.addReading(reading);
+                this.addReading(reading);
             });
         });
     }

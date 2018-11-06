@@ -16,7 +16,8 @@
                     <div class="row">
                         <div class="col-sm-10">
                                 <input maxlength="150" (keyup)="updateReading($event)" value="{{reading.readingVal}}" type="text" class="form-control" id="reading{{reading.index}}" placeholder="Reading">
-                        </div>
+                                <div id="read-validation-error" class="alert alert-danger hidden">A maximum of 160 characters are allowed. Only the characters A, C, G & T are allowed</div>
+                                </div>
                         <div class="col-sm-2">
                             <button class="btn btn-secondary float-right" (click)="generateReading()">Generate</button>
                         </div>
@@ -32,6 +33,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                                 <input maxlength="10" (keyup)="updateSearch($event)" value="{{reading.searchVal}}" type="text" class="form-control" id="search{{reading.index}}" placeholder="Search">
+                                <div id="search-validation-error" class="alert alert-danger hidden">A maximum of 10 characters are allowed. Only the characters A, C, G & T are allowed.</div>
                         </div>
                         <div class="col-sm-4">
                             <h4>Found : {{reading.instancesOfSearchString.length}}</h4>

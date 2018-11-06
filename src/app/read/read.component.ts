@@ -51,15 +51,38 @@ export class ReadComponent implements OnInit {
 
   // Test: Visual
   updateReading(event) {
+    this.validateRead(event.target.value);
     this.reading.readingVal = event.target.value;
     this.search();
   }
 
   // Test: Visual
   updateSearch(event) {
+    this.validateSearchVal(event.target.value);
     this.reading.searchVal = event.target.value;
 
     this.search();
+  }
+
+  // Basic Validation
+  validateRead(val) {
+    const regex = /^[CAGT]{0,160}$/gmi;
+
+    if (val.match(regex)) {
+      document.getElementById("read-validation-error").classList.add("hidden");
+    } else {
+      document.getElementById("read-validation-error").classList.remove("hidden");
+    }
+  }
+
+  validateSearchVal(val) {
+    const regex = /^[CAGT]{0,10}$/gmi;
+
+    if (val.match(regex)) {
+      document.getElementById("search-validation-error").classList.add("hidden");
+    } else {
+      document.getElementById("search-validation-error").classList.remove("hidden");
+    }
   }
 
   //Test: Delegated
