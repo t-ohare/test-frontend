@@ -66,7 +66,7 @@ export class ReadComponent implements OnInit {
 
   // Basic Validation
   validateRead(val) {
-    const regex = /^[CAGT]{0,160}$/gmi;
+    const regex = /^[CAGT]{0,150}$/gmi;
 
     if (val.match(regex)) {
       document.getElementById("read-validation-error").classList.add("hidden");
