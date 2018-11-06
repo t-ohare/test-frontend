@@ -23,7 +23,7 @@ export class ReadingService {
 
     buildPostData() {
         return this.reads.map((item) => {
-            return {"read":item.readingVal, "search":item.readingVal};
+            return {"read":item.readingVal, "search":item.searchVal};
         });
     }
 
